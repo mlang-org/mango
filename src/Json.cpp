@@ -1,7 +1,7 @@
 #include "mango/Json.hpp"
 
 #include <cctype>
-#include <charconv>
+#include <cstdlib>
 
 namespace mango {
 
@@ -170,11 +170,12 @@ private:
             }
         }
         if (pos_ == start) { fail("invalid value"); return std::nullopt; }
-        double value = 0.0;
-        const auto sv = text_.substr(start, pos_ - start);
-        const auto [ptr, ec] = std::from_chars(sv.data(), sv.data() + sv.size(), value);
-        if (ec != std::errc{}) { fail("invalid number"); return std::nullopt; }
-        (void)ptr;
+        // std::strtod is used instead of std::from_chars<double>: the latter's
+        // floating-point overload is unimplemented (deleted) in libc++ on macOS.
+        const std::string num(text_.substr(start, pos_ - start));
+        char* numEnd = nullptr;
+        const double value = std::strtod(num.c_str(), &numEnd);
+        if (numEnd != num.c_str() + num.size()) { fail("invalid number"); return std::nullopt; }
         return Json(value);
     }
 
