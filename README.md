@@ -48,6 +48,21 @@ git submodule at `packages/mango`. The full design is in
 | `mango search <query>` | Search the registry. |
 | `mango publish` | Package and upload to the registry. |
 
+## Install
+
+Prebuilt installers are on the
+[releases page](https://github.com/mlang-org/mango/releases/latest). mango is
+also bundled as an optional component of the MLang toolchain installer.
+
+```sh
+base=https://github.com/mlang-org/mango/releases/latest/download
+# Debian/Ubuntu
+sudo apt install $base/mango_0.1.0_amd64.deb
+# Fedora/RHEL
+sudo dnf install $base/mango-0.1.0-1.x86_64.rpm
+# Windows: download and run mango-0.1.0-win64.msi
+```
+
 ## Building
 
 ```sh
