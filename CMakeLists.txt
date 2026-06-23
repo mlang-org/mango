@@ -46,10 +46,15 @@ target_compile_definitions(mango PRIVATE MANGO_VERSION="${PROJECT_VERSION}")
 install(TARGETS mango
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     COMPONENT mango)
-install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/README.md"
-              "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE"
-    DESTINATION ${CMAKE_INSTALL_DOCDIR}
-    COMPONENT mango)
+# Install mango's own docs only when built standalone. When bundled into the
+# MLang monorepo, the core component already ships LICENSE/README at the same
+# path, and installing them again collides (duplicate WiX component GUIDs).
+if(PROJECT_IS_TOP_LEVEL)
+    install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/README.md"
+                  "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE"
+        DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/doc/mango"
+        COMPONENT mango)
+endif()
 
 if(PROJECT_IS_TOP_LEVEL AND MANGO_BUILD_TESTS)
     enable_testing()
