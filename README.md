@@ -1,8 +1,7 @@
-<div align="center">
-
-# mango
-
-**The package manager for the [MLang](https://github.com/mlang-org/mlang) programming language.**
+<div align="center" style="display:grid;place-items:center;">
+<p>
+    <a href="https://mlang.org/" target="_blank"><img width="700" src="https://socialify.git.ci/mlang-org/mango/image?description=1&font=Inter&forks=1&issues=1&logo=https%3A%2F%2Fgithub.com%2Fmlang%2Fmlang%2Fblob%2Fmain%2F.github%2Flogo.png%3Fraw%3Dtrue&name=1&owner=1&pattern=Plus&pulls=1&stargazers=1&theme=Auto" alt="The MLang logo"></a>
+</p>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![C++23](https://img.shields.io/badge/written%20in-C%2B%2B23-00599C.svg)](src/)
