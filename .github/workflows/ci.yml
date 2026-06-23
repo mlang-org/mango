@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    name: Build & test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install CMake & Ninja
+        uses: lukka/get-cmake@latest
+
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DMANGO_WARNINGS_AS_ERRORS=ON
+
+      - name: Build
+        run: cmake --build build -j
+
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
+
+      - name: CLI smoke test
+        shell: bash
+        run: |
+          set -e
+          tmp="$(mktemp -d)"
+          cd "$tmp"
+          "$GITHUB_WORKSPACE/build/bin/mango" init
+          "$GITHUB_WORKSPACE/build/bin/mango" add std.http "^1.4.0"
+          "$GITHUB_WORKSPACE/build/bin/mango" tree
+          "$GITHUB_WORKSPACE/build/bin/mango" --version
