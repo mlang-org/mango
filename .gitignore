@@ -1,0 +1,20 @@
+# Build artifacts
+/build/
+/build-*/
+*.o
+*.a
+*.so
+*.exe
+CMakeCache.txt
+CMakeFiles/
+compile_commands.json
+
+# mango working state
+/packages/
+mango.lock.tmp
+
+# Editors
+.vscode/
+.idea/
+*.swp
+.DS_Store
